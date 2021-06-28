@@ -1,0 +1,30 @@
+{
+  "name": "analizer",
+  "version": "1.0.0",
+  "description": "Sintac analizer generator for operators grammars",
+  "main": "reconocedor.js",
+  "scripts": {
+    "test": "jest --forceExit --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benitez4721/SincaticAnalzGen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benitez4721/SincaticAnalzGen/issues"
+  },
+  "homepage": "https://github.com/benitez4721/SincaticAnalzGen#readme",
+  "devDependencies": {
+    "jest": "^27.0.5"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "lines": 80
+      }
+    }
+  }
+}
