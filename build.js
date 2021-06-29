@@ -1,8 +1,15 @@
-const { f, g, graph } = require("./globals");
+const { exit } = require("process");
+let { f, g, graph, hasCicle } = require("./globals");
 
 let graphLevel = 0;
 const build = () => {
   calcFuncs();
+  if (hasCicle["hc"]) {
+    console.log(
+      "ERROR: No es posible calcular las funciones f y g, el grafo tiene un ciclo"
+    );
+    exit();
+  }
   console.log("Analizador sintactico construido.\n");
   console.log("Valores para f:\n");
   Object.entries(f).forEach(([symbol, val]) =>
@@ -52,4 +59,4 @@ const removeNodes = (nodes, tempGraph) => {
   });
 };
 
-module.exports = build;
+module.exports = { build, calcFuncs };

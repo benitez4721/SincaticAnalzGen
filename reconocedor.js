@@ -1,10 +1,10 @@
-const { exit } = require("process");
 const { terminals, noTerminals } = require("./globals");
 const readline = require("readline");
 const createRule = require("./createRule");
 const createPrec = require("./createPrec");
-const build = require("./build");
+const { build } = require("./build");
 const parse = require("./parse");
+const { exit } = require("process");
 
 var rl = readline.createInterface({
   input: process.stdin,
@@ -84,14 +84,17 @@ const setStartSymbol = (symbol) => {
 };
 
 const askForAction = () => {
-  rl.question("Ingrease una accion \n", (action) => {
-    if (action === "0") {
-      rl.close();
-      return;
+  rl.question(
+    "\nIngrease una accion una de las siguientes acciones: \n\n 1 - RULE <no-terminal> [<simbolo>] : Para crear una regla de la gramática \n 2 - PREC <terminal> <op> <terminal>: Para crear una precedencia entre dos operadores \n 3 - INIT <no-terminal>: Para indicar el simbolo inicial de la gramática\n 4 - BUILD : Para construir el analizador sintáctico\n 5 - PARSE <string> : Para ejecutar el analizador\n 6 - EXIT : Para salir del simulador\n\n",
+    (action) => {
+      if (action === "0") {
+        rl.close();
+        return;
+      }
+      console.log(execAction(action));
+      askForAction();
     }
-    console.log(execAction(action));
-    askForAction();
-  });
+  );
 };
 
 const actions = {
@@ -100,6 +103,7 @@ const actions = {
   PREC: createPrec,
   BUILD: build,
   PARSE: parse,
+  EXIT: () => exit(),
 };
 
 // testActions2.forEach((action) => {

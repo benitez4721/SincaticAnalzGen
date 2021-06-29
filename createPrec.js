@@ -1,4 +1,4 @@
-const { terminals, graph } = require("./globals");
+let { terminals, graph, hasCicle } = require("./globals");
 
 const createPrec = (precInput) => {
   let prec = precInput.split(" ");
@@ -41,8 +41,10 @@ const createPrec = (precInput) => {
     }
 
     return `"${prec[0]}" tiene mayor precedencia que "${prec[2]}"\n`;
+  } else {
+    hasCicle["hc"] = true;
+    return `"${prec[0]}" tiene igual precedencia que "${prec[2]}"\n`;
   }
-  return;
 };
 
 module.exports = createPrec;

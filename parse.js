@@ -1,7 +1,8 @@
 const lexer = require("./lexer");
 const { f, g, noTerminals, rules } = require("./globals");
 
-const printRows = [];
+let printRows = [];
+let accept = false;
 const initParse = (phraseInput) => {
   let phrase = phraseInput.split(" ");
   let entry = ["$"];
@@ -27,7 +28,7 @@ const initParse = (phraseInput) => {
   phraseWithPred.push("$");
   parse(phraseWithPred, "<", entry, "leer");
   printParserTable();
-  return "";
+  return accept;
 };
 
 let stack = ["$"];
@@ -83,12 +84,17 @@ const parse = (phrase, pred, entry, action, rule = "") => {
     } else {
       pred = "<";
     }
-    parse(phrase, pred, entry, getParseAction(entry, pred, phrase));
+    let newAct = getParseAction(entry, pred, phrase);
+    if (newAct === "aceptar") {
+      pred = "";
+    }
+    parse(phrase, pred, entry, newAct);
   }
 };
 
 const getParseAction = (entry, pred, phrase) => {
   if (entry.length === 1 && phrase.length === 1) {
+    accept = true;
     return "aceptar";
   }
 
@@ -100,6 +106,8 @@ const getParseAction = (entry, pred, phrase) => {
 
 const printParserTable = () => {
   console.table(printRows);
+  stack = ["$"];
+  printRows = [];
 };
 
 module.exports = initParse;
